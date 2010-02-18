@@ -1,0 +1,8 @@
+instahn is a script that adds every story on the front page of Hacker News to your Instapaper.
+
+
+##Usage
+
+Once you've downloaded the script, run it with `python instahn.py`.
+
+If you run instahn.py with no arguments, it will prompt you for your Instapaper username and password. If you run it with one argument, it will assume that is your Instapaper username. If you run it with two arguments, it will assume that the first argument is your Instapaper username and the second argument is your Instapaper password.

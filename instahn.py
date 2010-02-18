@@ -1,9 +1,16 @@
 #instapaper.py is Copyright (c) 2009 Eiji Kato
 #See http://github.com/technolize/python-instapaper/ for details.
 
+#hnapi.py is Copyright (c) 2010 Scott Jackson
+#See http://github.com/scottjacksonx/hn-api/ for details.
+
 from instapaper import *
 from hnapi import *
 import sys
+
+class InstaHNException(Exception):
+	pass
+	
 
 username = ""
 password = ""
@@ -19,12 +26,26 @@ elif len(args) == 3:
 	username = args[1]
 	password = args[2]
 
-hn = HackerNewsAPI()
-instapaper = Instapaper(username, password)
-instapaper.auth()
-stories = hn.getTopStories()
 
-for s in stories:
-	instapaper.add(s.URL)
-	print "story added = " + s.title
+try:
+	hn = HackerNewsAPI()
+	instapaper = Instapaper(username, password)
+	print "Authorising your Instapaper credentials..."
+	instapaper.auth()
+	print "Instapaper credentials accepted."
+except Exception as e:
+	print e
+	sys.exit()
+	
+try:
+	print "Getting stories from Hacker News..."
+	stories = hn.getTopStories()
+
+	for s in stories:
+		instapaper.add(s.URL)
+		print "story added = " + s.title
+except HNException as e:
+	print e
+	sys.exit()
+	
 	
